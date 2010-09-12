@@ -7,33 +7,40 @@
 <script type="text/javascript"
     src="http://maps.google.com/maps/api/js?sensor=true">
 </script>
-<script type="text/javascript">
-  function initialize() {
-    var centerLocation = new google.maps.LatLng(37.4418834, -122.1430195);
+<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAATUBQA1lkyELtUqbG840a8BT38fk-Eb9wY3RxJYljYSmOSjofyxSVsdUGZ5XXvVX2Ur5RD1QbFH21GQ"></script>
 
+<script type="text/javascript">
+        google.load("jquery", "1.4.2");
+  function initialize() {
+
+    var centerLocation = new google.maps.LatLng(37.4418834, -122.1430195);
+    
     var myOptions = {
       zoom: 11,
       center: centerLocation,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
+    map = new google.maps.Map(document.getElementById("map_canvas"),
         myOptions);
   
+/*
     // Creating a marker and positioning it on the map
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
       position: centerLocation,
       map: map,
       title:"The Couch!"
     });
+*/
+    marker = createMarker(centerLocation, "The Couch!", map, "none")
+    
     
     var contentString = '<div id="content">'+
     '<h1 id="firstHeading" class="firstHeading">The Couch</h1>'+
     '<div id="bodyContent">'+
     '<ul>'+
-        '<li><img src="./images/award_star_add.png"/></li>'+
+        '<li>$200 <img src="/site_media/images/award_star_add.png"/ onClick="changeToStar(233) id="markFlag"></li>'+
         '<li>I\'m an awesome couch</li>'+
-        '<li>$200</li>'+
-        '<li>:)</li>'+
+        '<li><a href="#" onClick="showInfo(233)">More Info...</a></li>'+
     '</ul>'+
     '</div>'+
     '</div>';
@@ -45,6 +52,34 @@
         infowindow.open(map,marker);
     });
 }
+    function showInfo(id){
+        var contentString =
+        '<div id="bodyContent2">'+
+        '<ul>'+
+            '<li>$200 <img src="/site_media/images/award_star_add.png" onClick="changeToStar(233) id="markFlag"/></li>'+
+            '<li>I\'m an awesome couch</li>'+
+            '<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>'+
+        '</ul>'+
+        '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        infowindow.open(map,marker);
+    }
+    function changeToStar(){
+        
+    }
+    
+    function createMarker(latlong, titleText,gmap, image){
+        if(image =="none"){
+            marker = new google.maps.Marker({
+                position: latlong,
+                map: gmap,
+                title:titleText
+            });
+        }
+        return marker
+    }
 </script>
 <title>CouchTomato</title>
 </head>
