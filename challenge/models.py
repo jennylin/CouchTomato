@@ -3,8 +3,10 @@ from django.db import models
 # Create your models here.
 class Item(models.Model):
     title = models.CharField(max_length=256)
-    price = models.FloatField()
+    price = models.IntegerField()
     location = models.CharField(max_length=256)
+    def __unicode__(self):
+        return "$" + str(self.price) + " - " + self.title
 
 class ItemContact(models.Model):
     item = models.ForeignKey(Item)
