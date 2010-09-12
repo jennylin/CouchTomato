@@ -35,3 +35,10 @@ class CraigsParser:
             item_pic = ItemPicture()
             item_pic.item = item
             item_pic.pic = pic
+            item_pic.save()
+    def getEmail(self):
+        links = self.craigSoup.findAll("a")
+        for link in links:
+            if link['href'].startswith("mailto"):
+                return link.contents[0]
+        return ""

@@ -5,19 +5,20 @@ class Item(models.Model):
     title = models.CharField(max_length=256)
     price = models.IntegerField()
     location = models.CharField(max_length=256)
+    url = models.CharField(max_length=2048)
     def __unicode__(self):
         return "$" + str(self.price) + " - " + self.title
 
 class ItemContact(models.Model):
     item = models.ForeignKey(Item)
-    email = models.CharField(max_length=64)
-    phone = models.CharField(max_length=16)
-    name = models.CharField(max_length=64)
-    fb_profile = models.CharField(max_length=64)
+    email = models.CharField(max_length=256)
+    #phone = models.CharField(max_length=16)
+    #name = models.CharField(max_length=64)
+    #fb_profile = models.CharField(max_length=64)
 
 class ItemDescription(models.Model):
     item = models.ForeignKey(Item)
-    description = models.CharField(max_length=1024)
+    description = models.CharField(max_length=2048)
 
 class ItemPicture(models.Model):
     item = models.ForeignKey(Item)

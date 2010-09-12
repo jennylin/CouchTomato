@@ -41,8 +41,10 @@ class CraigsSearch:
         results = []
         for list in listings:
             try:
-                parsedListing = CraigsParser(list.a['href'])
+                itemUrl = list.a['href']
+                parsedListing = CraigsParser(itemUrl)
                 item = Item()
+                item.url = itemUrl
                 price = parsedListing.getPrice()
                 # we don't want an item if it's not for sale
                 # the > actually should work as an alphabetical comparison =)
@@ -52,8 +54,19 @@ class CraigsSearch:
                     item.title = parsedListing.getTitle()
                     i = Item.objects.filter(price=item.price, title=item.title)
                     if (i.count() == 0):
-                        item.description = parsedListing.getContent()
                         item.save()
+                        itemDescription = ItemDescription()
+                        itemDescription.description = parsedListing.getContent()
+                        itemDescription.item = item
+                        itemDescription.save()
+                        # couldn't get it to work for some reason so we'll just parse it when we need it
+                        #itemContact = ItemContact()
+                        #itemContact.email = parsedListing.getEmail()
+                        #itemContact.item = item
+                        #itemContact.phone = ''
+                        #itemContact.name = ''
+                        #itemContact.fb_profile = ''
+                        #itemContact.save()
                         parsedListing.getPictures(item)
                     # only save if we haven't saved before
                     results.append(item)
