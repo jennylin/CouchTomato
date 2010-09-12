@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.views.decorators.cache import never_cache
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -12,7 +13,8 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^$','django.views.generic.simple.direct_to_template', {'template': 'index.htm'}),
+    (r'^$/','django.views.generic.simple.direct_to_template', {'template': 'index.htm'}),
+    (r'^couch/','django.views.generic.simple.direct_to_template', {'template': 'index.htm'}),
     (r'^category/(?P<category>\w+)/?$','django.views.generic.simple.direct_to_template', {'template': 'index.htm'}),
     (r'^graph/','django.views.generic.simple.direct_to_template', {'template': 'graph.htm'}),
     (r'^search/(?P<location>.*)/?$', 'CouchTomato.challenge.views.search'),
