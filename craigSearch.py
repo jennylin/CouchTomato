@@ -35,9 +35,9 @@ class CraigsSearch:
     def calcDist(self, lat1, lng1, lat2, lng2):
         return math.sqrt((lat1-lat2)**2 + (lng1-lng2)**2)
     def search(self):
-        return getResults("http://"+self.craigLoc+".craigslist.org/search/?query=" + self.term +"&catAbb=sss")
+        return self.getResults("http://"+self.craigLoc+".craigslist.org/search/?query=" + self.term +"&catAbb=sss")
     def searchCategory(self, category):
-        return getResults("http://"+self.craigLoc+".craigslist.org/search/"+category+"?query="+self.term)
+        return self.getResults("http://"+self.craigLoc+".craigslist.org/search/"+category+"?query="+self.term)
     def getResults(self, url):
         craigDoc = urllib.urlopen(url)
         craigSoup = BeautifulSoup(craigDoc)
@@ -60,7 +60,7 @@ class CraigsSearch:
                     if (i.count() == 0):
                         item.save()
                         itemDescription = ItemDescription()
-                        itemDescription.description = parsedListing.getContent()
+                        itemDescription.description = parsedListing.getContent()[0:1024]
                         itemDescription.item = item
                         itemDescription.save()
                         # couldn't get it to work for some reason so we'll just parse it when we need it

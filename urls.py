@@ -17,8 +17,8 @@ urlpatterns = patterns('',
     (r'^couch/','django.views.generic.simple.direct_to_template', {'template': 'index.htm'}),
     (r'^category/(?P<category>\w+)/?$','django.views.generic.simple.direct_to_template', {'template': 'index.htm'}),
     (r'^graph/','django.views.generic.simple.direct_to_template', {'template': 'graph.htm'}),
-    (r'^search/(?P<location>.*)/?$', 'CouchTomato.challenge.views.search'),
-    (r'^search/(?P<category>\w+)/(?P<location>.*)/?$', 'CouchTomato.challenge.views.search_category'),
+    (r'^search/(?P<location>.+)/(?P<term>.*)/?$', 'CouchTomato.challenge.views.search'),
+    (r'^search/(?P<location>.+)/(?P<category>\w*)/()?P<term>.*/?$', 'CouchTomato.challenge.views.search_category'),
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
 )
