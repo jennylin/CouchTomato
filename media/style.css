@@ -55,7 +55,7 @@ body { height: 100%; margin: 0px; padding: 0px;
     background-color: #262626;
 }
 #logo{
-    background-image: url('./images/ct_logo.png');
+    background-image: url('./images/CouchTomato_logo2.jpg');
     background-repeat: no-repeat;
     width: 100%;
     height:105px;
@@ -91,4 +91,11 @@ body { height: 100%; margin: 0px; padding: 0px;
 .sub{
     position: relative;
     left: 10px;
+}
+#bodyContent{
+    overflow: hidden;
+}
+#bodyContent2{
+    width:300px;
+    height: 300px;
 }
