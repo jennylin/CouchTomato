@@ -54,6 +54,15 @@ html { height: 100%;    font-family: Helvetica, Arial, sans-serif; }
 body { height: 100%; margin: 0px; padding: 0px; 
     background-color: #262626;
 }
+a {
+    text-decoration:none;
+}
+a:link {
+    color:white;
+}
+a:visited {
+    color:white;
+}
 #logo{
     background-image: url('./images/CouchTomato_logo2.jpg');
     background-repeat: no-repeat;
@@ -98,4 +107,9 @@ body { height: 100%; margin: 0px; padding: 0px;
 #bodyContent2{
     width:300px;
     height: 300px;
+}
+.search_submit{
+    background-color: #535353;
+    border-radius: 3px 3px;
+    color: white;
 }

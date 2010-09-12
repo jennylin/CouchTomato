@@ -34,8 +34,12 @@ class CraigsSearch:
         return craigLoc
     def calcDist(self, lat1, lng1, lat2, lng2):
         return math.sqrt((lat1-lat2)**2 + (lng1-lng2)**2)
-    def getResults(self):
-        craigDoc = urllib.urlopen("http://"+self.craigLoc+".craigslist.org/search/?query=" + self.term +"&catAbb=sss")
+    def search(self):
+        return getResults("http://"+self.craigLoc+".craigslist.org/search/?query=" + self.term +"&catAbb=sss")
+    def searchCategory(self, category):
+        return getResults("http://"+self.craigLoc+".craigslist.org/search/"+category+"?query="+self.term)
+    def getResults(self, url):
+        craigDoc = urllib.urlopen(url)
         craigSoup = BeautifulSoup(craigDoc)
         listings = craigSoup.findAll("p", {"class":"row"})
         results = []
