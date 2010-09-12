@@ -81,19 +81,5 @@
         );
       }
     </script>
-    <script>
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          // TODO: replace ajax url below
-          $.ajax({type:'POST', url:'/ajax_path', data:{mylat:position.coords.latitude, mylong:position.coords.longitude}});
-          
-          // The following Google map embed is just a test
-          document.getElementById("GeoAPI").innerHTML = "<iframe style=\"width: 400px; height: 400px\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"http://maps.google.com/?ll=" + position.coords.latitude + "," + position.coords.longitude + "&z=16&output=embed\"></iframe>";
-        });
-      }
-      else {
-        document.getElementById("GeoAPI").innerHTML = "Geolocation services are not supported by this browser";
-      }
-    </script>
-  </body>
+    </body>
 </html>

@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-
 <link rel="stylesheet" type="text/css" href="/site_media/style.css" />
 <script type="text/javascript"
     src="http://maps.google.com/maps/api/js?sensor=true">
@@ -23,7 +22,24 @@
         map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
         var marker = createMarker(37.4418834, -122.1430195, "The Couch!", map, "flagged");
         attachInfoWin(marker, 0);
-
+        //south bound = , -
+        //north bound = 37.7749295, -122.4194155
+        var southWest = new google.maps.LatLng(37.4217080,-122.0829964);
+        var northEast = new google.maps.LatLng(37.4418834, -122.1430195);
+        var bounds = new google.maps.LatLngBounds(southWest,northEast);
+        var lngSpan = northEast.lng() - southWest.lng();
+        var latSpan = northEast.lat() - southWest.lat();
+        for (var i = 1; i < 5; i++) {
+            var location = new google.maps.LatLng(southWest.lat() + latSpan * Math.random(),
+                southWest.lng() + lngSpan * Math.random());
+            var marker = new google.maps.Marker({
+                position: location, 
+                map: map
+            });
+            var j = i + 1;
+            marker.setTitle(j.toString());
+            attachInfoWin(marker, i);
+        }
     }
 
 function attachInfoWin(marker, number) {
@@ -32,15 +48,14 @@ function attachInfoWin(marker, number) {
         '<div id="bodyContent">'+
         '<ul>'+
             '<li>$200 <img src="/site_media/images/award_star_add.png"/ onClick="changeMarker()"  id="markFlag"></li>'+
-            '<li>I\'m an awesome couch</li>'+
-            '<li><a href="#" onClick="showInfo(233)">More Info...</a></li>'+
+            '<li>I\'m an awesome couch!</li>'+
+            '<li><p href="#" onClick="showInfo(233)">More Info</p></li>'+
         '</ul>'+
         '</div>'+
         '</div>';
         
         var infowindow = new google.maps.InfoWindow({
             content: contentString,
-            size: new google.maps.Size(50,100)
         });
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
@@ -55,6 +70,7 @@ function attachInfoWin(marker, number) {
             '<li>$200 <img src="/site_media/images/award_star_add.png" onClick="changeMarker()"  id="markFlag"/></li>'+
             '<li>I\'m an awesome couch</li>'+
             '<li id="fullInfo"></li>'+
+            '<a href="./graph/">Poster info</a>'+
         '</ul>'+
         '</div>';
         var infowindow = new google.maps.InfoWindow({
@@ -126,7 +142,8 @@ function attachInfoWin(marker, number) {
                 </li>
             </ul>
         </div>
-        <div id="map_canvas"></div>
+        <div id="map_canvas">
+        </div>
     </div>
 </body>
 </html>

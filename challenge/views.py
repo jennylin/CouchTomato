@@ -9,9 +9,10 @@ from CouchTomato.craigSearch import CraigsSearch
 def search(request, location, term):
     cs = CraigsSearch(term, location)
     results = cs.search()
-    return render_to_response('index.htm', serializers.serialize("json",results))
-
+    #return render_to_response('index.htm', serializers.serialize("json",results))
+    return HttpResponse(serializers.serialize("json",results), mimetype="application/json")
 def search_category(request, category, location, term):
     cs = CraigSearch(term, location)
     results = cs.searchCategory(category)
-    return render_to_response('index.htm', serializers.serialize("json",results))
+    #return render_to_response('index.htm', serializers.serialize("json",results))
+    return HttpResponse(serializers.serialize("json",results), mimetype="application/json")
