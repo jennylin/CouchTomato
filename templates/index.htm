@@ -22,12 +22,16 @@
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
         var marker = createMarker(37.4418834, -122.1430195, "The Couch!", map, "flagged");
-        markers.push(marker);
+        attachInfoWin(marker, 0);
+
+    }
+
+function attachInfoWin(marker, number) {
         var contentString = '<div id="content">'+
         '<h1 id="firstHeading" class="firstHeading">The Couch</h1>'+
         '<div id="bodyContent">'+
         '<ul>'+
-            '<li>$200 <img src="/site_media/images/award_star_add.png"/ onClick="changeToStar("233")"  id="markFlag"></li>'+
+            '<li>$200 <img src="/site_media/images/award_star_add.png"/ onClick="changeMarker()"  id="markFlag"></li>'+
             '<li>I\'m an awesome couch</li>'+
             '<li><a href="#" onClick="showInfo(233)">More Info...</a></li>'+
         '</ul>'+
@@ -35,20 +39,22 @@
         '</div>';
         
         var infowindow = new google.maps.InfoWindow({
-            content: contentString
+            content: contentString,
+            size: new google.maps.Size(50,100)
         });
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
+            markers.push(marker);
         });
-    }
+}
 
     function showInfo(id){
         var contentString =
         '<div id="bodyContent2">'+
         '<ul>'+
-            '<li>$200 <img src="/site_media/images/award_star_add.png" onClick="changeMarker(\'233\')"  id="markFlag"/></li>'+
+            '<li>$200 <img src="/site_media/images/award_star_add.png" onClick="changeMarker()"  id="markFlag"/></li>'+
             '<li>I\'m an awesome couch</li>'+
-            '<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>'+
+            '<li id="fullInfo"></li>'+
         '</ul>'+
         '</div>';
         var infowindow = new google.maps.InfoWindow({
@@ -67,7 +73,7 @@
                 title:titleText
             });
         }
-        if(image ==="flagged"){
+        if(image =="flagged"){
             var flagIcon = new google.maps.MarkerImage("./site_media/images/bronze.png");
             marker = new google.maps.Marker({
                 position: latlong,
@@ -78,8 +84,10 @@
         }
         return marker;
     }
-    function changeMarker(latlong){
-        markers[0].setIcon(new google.maps.MarkerImage("site_media/images/bronze.png"));
+    function changeMarker(){
+        lastIndex = markers.length - 1;
+        markers[lastIndex].setIcon(new google.maps.MarkerImage("site_media/images/bronze.png"));
+        markers.pop();
     }   
 </script>
 <title>CouchTomato</title>
