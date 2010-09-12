@@ -11,7 +11,9 @@
 
 <script type="text/javascript">
     google.load("jquery", "1.4.2");
+    
     function initialize() {
+        markers = [];
         var centerLocation = new google.maps.LatLng(37.4418834, -122.1430195);
         var myOptions = {
           zoom: 11,
@@ -19,12 +21,13 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
-        marker = createMarker(37.4418834, -122.1430195, "The Couch!", map, "none");    
+        var marker = createMarker(37.4418834, -122.1430195, "The Couch!", map, "flagged");
+        markers.push(marker);
         var contentString = '<div id="content">'+
         '<h1 id="firstHeading" class="firstHeading">The Couch</h1>'+
         '<div id="bodyContent">'+
         '<ul>'+
-            '<li>$200 <img src="/site_media/images/award_star_add.png"/ onClick="changeToStar("233") id="markFlag"></li>'+
+            '<li>$200 <img src="/site_media/images/award_star_add.png"/ onClick="changeToStar("233")"  id="markFlag"></li>'+
             '<li>I\'m an awesome couch</li>'+
             '<li><a href="#" onClick="showInfo(233)">More Info...</a></li>'+
         '</ul>'+
@@ -43,7 +46,7 @@
         var contentString =
         '<div id="bodyContent2">'+
         '<ul>'+
-            '<li>$200 <img src="/site_media/images/award_star_add.png" onClick="changeMarker(\'233\')" id="markFlag"/></li>'+
+            '<li>$200 <img src="/site_media/images/award_star_add.png" onClick="changeMarker(\'233\')"  id="markFlag"/></li>'+
             '<li>I\'m an awesome couch</li>'+
             '<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>'+
         '</ul>'+
@@ -64,8 +67,8 @@
                 title:titleText
             });
         }
-        if(image =="flagged"){
-            var flagIcon = new google.maps.MarkerImage("./site_media/images/award_star_bronce_1.png");
+        if(image ==="flagged"){
+            var flagIcon = new google.maps.MarkerImage("./site_media/images/bronze.png");
             marker = new google.maps.Marker({
                 position: latlong,
                 map: gmap,
@@ -73,10 +76,10 @@
                 image: flagIcon
             });
         }
-        return marker
+        return marker;
     }
     function changeMarker(latlong){
-    
+        markers[0].setIcon(new google.maps.MarkerImage("site_media/images/bronze.png"));
     }   
 </script>
 <title>CouchTomato</title>

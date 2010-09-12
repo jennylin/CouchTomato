@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Couch Tomato</title>
+  </head>
+  <body>
+    <h1>Couch Tomato</h1>
+    <div>
+      <button id="login" style="display:none;">Login</button>
+    </div>
+    <div id="user-info" style="display:none;"></div>
+    <div id="user-name" style="display:none;"></div>
+    <div id="common-friends" style="display:none;">
+    	<h2>Common friends</h2>
+    	<div id="friend-info-1" style="float:left;display:none;padding:10px;"></div>
+    	<div id="friend-info-2" style="float:left;display:none;padding:10px;"></div>
+    	<div id="friend-info-3" style="float:left;display:none;padding:10px;"></div>
+    	<div id="friend-info-4" style="float:left;display:none;padding:10px;"></div>
+    	<div style="clear:both;" />
+    </div>
+    <div id="GeoAPI"></div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+    <div id="fb-root"></div>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script>
+      var seller = '682176702';  // Gonzalo Maldonado
+      
+      FB.init({ apiKey: 'f4105aa2b02552c7829bac397782d85a' });
+
+      // fetch the status on load
+      FB.getLoginStatus(handleSessionResponse);
+
+      $('#login').bind('click', function() {
+        FB.login(handleSessionResponse);
+      });
+
+      // handle a session response from any of the auth related calls
+      function handleSessionResponse(response) {
+        if (!response.session) {
+          $('#login').show('fast');
+          return;
+        }
+        
+        $('#login').hide('fast');
+        FB.api(
+          {
+            method: 'friends.getMutualFriends',
+            target_uid: seller
+          },
+          function(response) {
+            var ids;
+            if (response.length > 4) {
+              ids = response.slice(0, 4);
+            }
+            else {
+              ids = response;
+            }
+            ids.splice(0, 0, FB.getSession().uid);
+            FB.api(
+              {
+                method: 'fql.query',
+                query: 'SELECT name, pic FROM profile WHERE id IN (' + ids + ')'
+              },
+              function(response) {
+                var user = response[0];
+                $('#user-info').html('<img src="' + user.pic + '">').show('fast');
+                $('#user-name').html(user.name).show('fast');
+                if (response.length > 1) {
+                  $('#common-friends').show('fast');
+                  for (var i=1; i <= response.length; i++) {
+                    user = response[i];
+                    $('#friend-info-' + i).html('<img src="' + user.pic + '"><br /><span>' + user.name + '</span>').show('fast');
+                  }
+                }
+              }
+            );
+          }
+        );
+      }
+    </script>
+    <script>
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          // TODO: replace ajax url below
+          $.ajax({type:'POST', url:'/ajax_path', data:{mylat:position.coords.latitude, mylong:position.coords.longitude}});
+          
+          // The following Google map embed is just a test
+          document.getElementById("GeoAPI").innerHTML = "<iframe style=\"width: 400px; height: 400px\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"http://maps.google.com/?ll=" + position.coords.latitude + "," + position.coords.longitude + "&z=16&output=embed\"></iframe>";
+        });
+      }
+      else {
+        document.getElementById("GeoAPI").innerHTML = "Geolocation services are not supported by this browser";
+      }
+    </script>
+  </body>
+</html>
