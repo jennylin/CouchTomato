@@ -22,7 +22,24 @@
         map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
         var marker = createMarker(37.4418834, -122.1430195, "The Couch!", map, "flagged");
         attachInfoWin(marker, 0);
-
+        //south bound = , -
+        //north bound = 37.7749295, -122.4194155
+        var southWest = new google.maps.LatLng(37.4217080,-122.0829964);
+        var northEast = new google.maps.LatLng(37.4418834, -122.1430195);
+        var bounds = new google.maps.LatLngBounds(southWest,northEast);
+        var lngSpan = northEast.lng() - southWest.lng();
+        var latSpan = northEast.lat() - southWest.lat();
+        for (var i = 1; i < 5; i++) {
+            var location = new google.maps.LatLng(southWest.lat() + latSpan * Math.random(),
+                southWest.lng() + lngSpan * Math.random());
+            var marker = new google.maps.Marker({
+                position: location, 
+                map: map
+            });
+            var j = i + 1;
+            marker.setTitle(j.toString());
+            attachInfoWin(marker, i);
+        }
     }
 
 function attachInfoWin(marker, number) {

@@ -35,7 +35,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/jenny/CouchTomato/media/'
+MEDIA_ROOT = '/home/gueb7/CouchTomato/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -63,7 +63,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'CouchTomato.NoCacheMiddleware'
 )
 
 ROOT_URLCONF = 'CouchTomato.urls'
@@ -72,7 +71,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/home/jenny/CouchTomato/templates/"
+    "/home/gueb7/CouchTomato/templates/"
 )
 
 INSTALLED_APPS = (
