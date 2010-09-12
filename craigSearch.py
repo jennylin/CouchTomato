@@ -74,8 +74,6 @@ class CraigsSearch:
                         parsedListing.getPictures(item)
                     # only save if we haven't saved before
                     results.append(item)
-                    if (results.count() == 10):
-                        return results
             except ValueError:
                 print "value error"
         return results
